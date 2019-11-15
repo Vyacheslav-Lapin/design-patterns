@@ -1,0 +1,29 @@
+package ru.vlapin.patterns.singleton.canonical;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+/**
+ * @author Vyacheslav Lapin
+ */
+public final class ServiceRegistry {
+  private static final ServiceRegistry INSTANCE = new ServiceRegistry();
+  private final ConcurrentMap<String, NamedService> services = new ConcurrentHashMap<>();
+
+  private ServiceRegistry() {
+  }
+
+  public static ServiceRegistry getInstance() {
+    return INSTANCE;
+  }
+
+  public void register(NamedService service) {
+    String name = service.getName();
+    System.out.println("Register service with name: " + name);
+    services.put(name, service);
+  }
+
+  public NamedService getService(String name) {
+    return services.get(name);
+  }
+}
